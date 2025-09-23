@@ -580,6 +580,7 @@ footer {
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
+<<<<<<< HEAD
         padding: 15px;
         transform: scale(0.9);
         transform-origin: top center;
@@ -589,10 +590,51 @@ footer {
         margin: 5% auto;
         padding: 20px;
         transform: scale(1.1);
+=======
+        padding: 10px;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    
+    .board {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .cell {
+        font-size: 2rem;
+    }
+    
+    .game-stats {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .stat-card {
+        min-width: 200px;
+    }
+    
+    .card-deck {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .probability-card {
+        min-width: 200px;
+    }
+    
+    .modal-content {
+        margin: 10% auto;
+        padding: 20px;
+>>>>>>> 1f567b79240b5aa6a8fed63ec8251e89b795dfe0
     }
 }
 
 @media (max-width: 480px) {
+<<<<<<< HEAD
     .container {
         padding: 10px;
         transform: scale(0.75);
@@ -603,5 +645,18 @@ footer {
         margin: 2% auto;
         padding: 15px;
         transform: scale(1.33);
+=======
+    .board {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .cell {
+        font-size: 1.5rem;
+    }
+    
+    .quantum-symbols {
+        font-size: 1.5rem;
+>>>>>>> 1f567b79240b5aa6a8fed63ec8251e89b795dfe0
     }
 }
