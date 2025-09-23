@@ -21,13 +21,31 @@ class QuantumTicTacToe {
     }
 
     setupEventListeners() {
-        // Board cell clicks
+        // Board cell clicks - support both touch and mouse events
         document.querySelectorAll('.cell').forEach((cell, index) => {
+            // Touch events for mobile (faster response)
+            cell.addEventListener('touchstart', (e) => {
+                e.preventDefault(); // Prevent mouse events from firing
+                this.handleCellClick(index);
+            });
+            
+            // Mouse events for desktop
             cell.addEventListener('click', () => this.handleCellClick(index));
         });
 
-        // Probability card clicks
-        document.getElementById('probability-deck').addEventListener('click', (e) => {
+        // Probability card clicks - support both touch and mouse events
+        const probabilityDeck = document.getElementById('probability-deck');
+        
+        // Touch events for mobile (faster response)
+        probabilityDeck.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Prevent mouse events from firing
+            if (e.target.classList.contains('probability-card')) {
+                this.selectProbabilityCard(e.target);
+            }
+        });
+        
+        // Mouse events for desktop
+        probabilityDeck.addEventListener('click', (e) => {
             if (e.target.classList.contains('probability-card')) {
                 this.selectProbabilityCard(e.target);
             }
