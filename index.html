@@ -2,10 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="description" content="Learn quantum mechanics through interactive tic-tac-toe! Explore superposition, wave function collapse, and probability in a fun, educational game for kids and adults.">
     <meta name="keywords" content="quantum mechanics, tic-tac-toe, educational game, physics, superposition, wave function collapse, interactive learning">
     <meta name="author" content="Quantum Tic-Tac-Toe Game">
+    
+    <!-- iOS Web App Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Quantum TTT">
+    <meta name="mobile-web-app-capable" content="yes">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -27,18 +33,70 @@
             <p class="subtitle">Where pieces exist in multiple states at once!</p>
         </header>
 
-        <!-- Educational Introduction -->
-        <div id="intro-modal" class="modal">
-            <div class="modal-content">
-                <h2>Welcome to the Quantum World! 🎭</h2>
-                <p>In quantum mechanics, particles can be in <strong>superposition</strong> - existing in multiple states at the same time!</p>
-                <p>In our game:</p>
-                <ul>
-                    <li>🌀 Quantum pieces are both X and O until observed</li>
-                    <li>🎯 You can "collapse" a piece to make it choose X or O</li>
-                    <li>🏆 Win by getting 3 collapsed pieces in a row</li>
-                </ul>
-                <button id="start-game" class="btn-primary">Start Playing!</button>
+        <!-- Intro Full Page -->
+        <div id="intro-modal" class="full-page">
+            <div class="full-page-content">
+                <div class="page-header">
+                    <h1>🌟 Quantum Tic-Tac-Toe 🌟</h1>
+                </div>
+                <div class="page-body">
+                    <h2>Welcome to the Quantum World! 🎭</h2>
+                    <p>In quantum mechanics, particles can be in <strong>superposition</strong> - existing in multiple states at the same time!</p>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <span class="feature-icon">🌀</span>
+                            <div class="feature-text">
+                                <strong>Quantum Superposition</strong>
+                                <p>Pieces are both X and O until observed</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🎯</span>
+                            <div class="feature-text">
+                                <strong>Wave Function Collapse</strong>
+                                <p>Click pieces to collapse and reveal X or O</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🏆</span>
+                            <div class="feature-text">
+                                <strong>Win Condition</strong>
+                                <p>Get 3 collapsed pieces in a row to win!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-footer">
+                    <button id="start-game" class="btn-primary btn-large">Choose Game Mode</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Mode Selection -->
+        <div id="mode-select-modal" class="full-page">
+            <div class="full-page-content">
+                <div class="page-header">
+                    <button class="back-btn" onclick="document.getElementById('mode-select-modal').style.display='none'; document.getElementById('intro-modal').style.display='block';">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <h1>Select Game Mode</h1>
+                </div>
+                <div class="page-body centered">
+                    <div class="mode-selection">
+                        <button id="mode-vs-player" class="mode-btn">
+                            <span class="mode-icon">👥</span>
+                            <strong>Player vs Player</strong>
+                            <p>Play against a friend locally</p>
+                        </button>
+                        <button id="mode-vs-computer" class="mode-btn">
+                            <span class="mode-icon">🤖</span>
+                            <strong>Player vs Computer</strong>
+                            <p>Challenge the AI with random strategies</p>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -91,7 +149,6 @@
             <div id="probability-deck" class="card-deck">
                 <!-- Cards will be generated by JavaScript -->
             </div>
-            <button id="refresh-deck" class="btn-secondary">🔄 Shuffle New Cards</button>
         </div>
 
         <!-- Game Controls -->
@@ -100,41 +157,59 @@
             <button id="show-help" class="btn-secondary">❓ Help</button>
         </div>
 
-        <!-- Help Modal -->
-        <div id="help-modal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>How to Play Quantum Tic-Tac-Toe</h2>
-                <div class="help-section">
-                    <h3>🌀 Quantum Superposition</h3>
-                    <p>Quantum pieces exist in both X and O states simultaneously until observed!</p>
+        <!-- Help Full Page -->
+        <div id="help-modal" class="full-page">
+            <div class="full-page-content">
+                <div class="page-header">
+                    <button class="back-btn" onclick="document.getElementById('help-modal').style.display='none'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <h1>How to Play</h1>
                 </div>
-                <div class="help-section">
-                    <h3>🎯 Wave Function Collapse</h3>
-                    <p>When you collapse a quantum piece, it randomly becomes either X or O based on its probability!</p>
-                </div>
-                <div class="help-section">
-                    <h3>🏆 How to Win</h3>
-                    <p>Get three collapsed pieces (real X's or O's) in a row - horizontally, vertically, or diagonally!</p>
-                </div>
-                <div class="help-section">
-                    <h3>🎮 Game Actions</h3>
-                    <ul>
-                        <li>Select a probability card and click an empty cell to place a quantum piece</li>
-                        <li>Click on any quantum piece to collapse it (instead of placing a new piece)</li>
-                        <li>Watch the magic happen!</li>
-                    </ul>
+                <div class="page-body scrollable">
+                    <div class="help-section">
+                        <h3>🌀 Quantum Superposition</h3>
+                        <p>Quantum pieces exist in both X and O states simultaneously until observed!</p>
+                    </div>
+                    <div class="help-section">
+                        <h3>🎯 Wave Function Collapse</h3>
+                        <p>When you collapse a quantum piece, it randomly becomes either X or O based on its probability!</p>
+                    </div>
+                    <div class="help-section">
+                        <h3>🏆 How to Win</h3>
+                        <p>Get three collapsed pieces (real X's or O's) in a row - horizontally, vertically, or diagonally!</p>
+                    </div>
+                    <div class="help-section">
+                        <h3>🎮 Game Actions</h3>
+                        <ul>
+                            <li>Select a probability card and click an empty cell to place a quantum piece</li>
+                            <li>Click on any quantum piece to collapse it (instead of placing a new piece)</li>
+                            <li>Watch the magic happen!</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Win Modal -->
-        <div id="win-modal" class="modal">
-            <div class="modal-content win-content">
-                <h2 id="win-title">🎉 Quantum Victory! 🎉</h2>
-                <p id="win-message"></p>
-                <p class="quantum-fact">Fun Fact: In real quantum mechanics, measuring a quantum system causes it to collapse into a definite state, just like in our game!</p>
-                <button id="play-again" class="btn-primary">Play Again!</button>
+        <!-- Win Full Page -->
+        <div id="win-modal" class="full-page">
+            <div class="full-page-content">
+                <div class="page-body centered">
+                    <div class="win-animation">
+                        <div class="trophy">🏆</div>
+                    </div>
+                    <h2 id="win-title" class="win-title">Quantum Victory!</h2>
+                    <p id="win-message" class="win-message"></p>
+                    <div class="quantum-fact">
+                        <span class="fact-icon">💡</span>
+                        <p>In real quantum mechanics, measuring a quantum system causes it to collapse into a definite state, just like in our game!</p>
+                    </div>
+                </div>
+                <div class="page-footer">
+                    <button id="play-again" class="btn-primary btn-large">Play Again!</button>
+                </div>
             </div>
         </div>
 

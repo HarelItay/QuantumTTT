@@ -1,219 +1,208 @@
-/* Reset and Base Styles */
+/* Professional iOS App Design - Ultra Compact (20% shorter) */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+:root {
+    /* Professional Color Palette */
+    --primary: #6366F1;
+    --primary-dark: #4F46E5;
+    --secondary: #EC4899;
+    --accent: #F59E0B;
+    --success: #10B981;
+    --danger: #EF4444;
+    
+    /* Neutral Colors */
+    --bg: #F8FAFC;
+    --surface: #FFFFFF;
+    --border: #E2E8F0;
+    --text: #1E293B;
+    --text-muted: #64748B;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
 body {
-    font-family: 'Roboto', 'Noto Sans', 'Droid Sans', Arial, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    color: #333;
-    overflow-x: hidden;
-    /* Improve touch responsiveness */
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+    background: var(--bg);
+    height: 100vh;
+    height: -webkit-fill-available;
+    color: var(--text);
+    overflow: hidden;
     -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    min-height: 100vh;
+    max-width: 100%;
+    height: 100vh;
+    height: -webkit-fill-available;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: max(env(safe-area-inset-top), 6px) 12px max(env(safe-area-inset-bottom), 6px) 12px;
+    gap: 6px;
 }
 
-/* Header Styles */
+/* Ultra Compact Header */
 header {
     text-align: center;
-    margin-bottom: 30px;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    flex-shrink: 0;
 }
 
-.container header h1 {
-    font-size: 1.5rem !important;
-    margin-bottom: 8px;
-    animation: rainbow 3s ease-in-out infinite alternate;
-}
-
-@keyframes rainbow {
-    0% { color: #ff6b6b; }
-    16% { color: #feca57; }
-    32% { color: #48dbfb; }
-    48% { color: #ff9ff3; }
-    64% { color: #54a0ff; }
-    80% { color: #5f27cd; }
-    100% { color: #00d2d3; }
+header h1 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 1px;
 }
 
 .subtitle {
-    font-size: 1.2rem;
-    opacity: 0.9;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: var(--text-muted);
 }
 
-/* Game Stats */
+/* Compact Stats */
 .game-stats {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 30px;
-    flex-wrap: nowrap;
-    max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    flex-shrink: 0;
 }
 
 .stat-card {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 10px 12px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 4px;
     text-align: center;
-    min-width: 100px;
-    flex: 1;
+    transition: transform 0.2s ease;
+}
+
+.stat-card:active {
+    transform: scale(0.97);
 }
 
 .stat-label {
     display: block;
-    font-size: 0.75rem;
-    color: #666;
-    margin-bottom: 3px;
+    font-size: 0.5625rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1px;
 }
 
 .stat-value {
     display: block;
     font-size: 1rem;
-    font-weight: bold;
-    color: #333;
+    font-weight: 700;
+    color: var(--primary);
 }
 
-/* Quantum Information */
+/* Compact Info Card */
 .quantum-info {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
+    flex-shrink: 0;
 }
 
 .quantum-message {
-    background: linear-gradient(135deg, #ddd6fe 0%, #c7d2fe 100%);
-    border: 3px solid #a78bfa;
-    border-radius: 20px;
-    padding: 20px;
+    background: linear-gradient(135deg, #EEF2FF 0%, #F3E8FF 100%);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 10px;
     text-align: center;
-    max-width: 600px;
-    box-shadow: 0 8px 25px rgba(167, 139, 250, 0.3);
-    animation: quantumGlow 3s ease-in-out infinite alternate;
-}
-
-@keyframes quantumGlow {
-    0% { 
-        box-shadow: 0 8px 25px rgba(167, 139, 250, 0.3);
-        transform: scale(1);
-    }
-    100% { 
-        box-shadow: 0 12px 35px rgba(167, 139, 250, 0.5);
-        transform: scale(1.02);
-    }
 }
 
 .quantum-message h3 {
-    color: #4c1d95;
-    margin-bottom: 15px;
-    font-size: 1.4rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 3px;
 }
 
 .quantum-message p {
-    color: #4c1d95;
-    margin-bottom: 10px;
-    line-height: 1.5;
+    font-size: 0.625rem;
+    line-height: 1.2;
+    color: var(--text-muted);
+    margin-bottom: 1px;
+}
+
+.quantum-message p:last-child {
+    margin-bottom: 0;
 }
 
 .quantum-message em {
-    color: #7c3aed;
-    font-weight: bold;
+    color: var(--primary);
+    font-weight: 600;
+    font-style: normal;
 }
 
-/* Game Board */
+/* Smaller Game Board */
 .game-board {
+    flex: 0 0 auto;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .board-container {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 10px;
+    box-shadow: var(--shadow-md);
 }
 
 .board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    gap: 8px;
-    width: 300px;
-    height: 300px;
+    gap: 6px;
+    width: 200px;
+    height: 200px;
 }
 
+/* Compact Cell Design */
 .cell {
-    background: #f8f9fa;
-    border: 3px solid #dee2e6;
+    background: var(--bg);
+    border: 2px solid var(--border);
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: 1.75rem;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.15s ease;
     position: relative;
-    overflow: hidden;
-    /* Improve touch responsiveness */
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    user-select: none;
+    min-width: 44px;
+    min-height: 44px;
 }
 
-.cell:hover {
-    background: #e9ecef;
-    transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+.cell:active {
+    transform: scale(0.95);
+    background: #F1F5F9;
 }
 
 .cell.occupied {
     cursor: default;
 }
 
-.cell.occupied:hover {
+.cell.occupied:active {
     transform: none;
-    background: #f8f9fa;
-    box-shadow: none;
+    background: var(--bg);
 }
 
-.cell.collapsed {
-    transform: none !important;
-    background: #f8f9fa !important;
-    box-shadow: none !important;
-    width: 100% !important;
-    height: 100% !important;
-    min-width: auto !important;
-    min-height: auto !important;
-    max-width: none !important;
-    max-height: none !important;
-}
-
-.cell.collapsed:hover {
-    transform: none !important;
-    background: #f8f9fa !important;
-    box-shadow: none !important;
-    width: 100% !important;
-    height: 100% !important;
-    min-width: auto !important;
-    min-height: auto !important;
-    max-width: none !important;
-    max-height: none !important;
-}
-
-/* Quantum Piece Styles */
+/* Quantum Pieces */
 .quantum-piece {
     position: relative;
     width: 100%;
@@ -222,399 +211,687 @@ header {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    animation: quantumPulse 2s ease-in-out infinite;
-}
-
-@keyframes quantumPulse {
-    0%, 100% { 
-        opacity: 0.7;
-        transform: scale(1);
-    }
-    50% { 
-        opacity: 1;
-        transform: scale(1.1);
-    }
 }
 
 .quantum-piece::before {
-    content: attr(data-x-prob);
+    content: '';
     position: absolute;
-    top: 2px;
-    left: 2px;
-    font-size: 0.5rem;
-    color: #ff6b6b;
-    font-weight: bold;
-    background: rgba(255, 255, 255, 0.95);
-    padding: 1px 3px;
-    border-radius: 4px;
-    z-index: 2;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    border-radius: 7px;
+    z-index: 1;
+    opacity: 0.25;
 }
 
-.quantum-piece::after {
-    content: attr(data-o-prob);
-    position: absolute;
-    bottom: 2px;
-    right: 2px;
-    font-size: 0.5rem;
-    color: #4834d4;
-    font-weight: bold;
-    background: rgba(255, 255, 255, 0.95);
-    padding: 1px 3px;
-    border-radius: 4px;
-    z-index: 2;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-}
+/* Clean probability gradients */
+.quantum-piece.prob-x90::before { background: linear-gradient(90deg, #EF4444 90%, #3B82F6 10%); }
+.quantum-piece.prob-x80::before { background: linear-gradient(90deg, #EF4444 80%, #3B82F6 20%); }
+.quantum-piece.prob-x70::before { background: linear-gradient(90deg, #EF4444 70%, #3B82F6 30%); }
+.quantum-piece.prob-x60::before { background: linear-gradient(90deg, #EF4444 60%, #3B82F6 40%); }
+.quantum-piece.prob-x55::before { background: linear-gradient(90deg, #EF4444 55%, #3B82F6 45%); }
+.quantum-piece.prob-x50::before { background: linear-gradient(90deg, #EF4444 50%, #3B82F6 50%); }
+.quantum-piece.prob-x45::before { background: linear-gradient(90deg, #EF4444 45%, #3B82F6 55%); }
+.quantum-piece.prob-x40::before { background: linear-gradient(90deg, #EF4444 40%, #3B82F6 60%); }
+.quantum-piece.prob-x30::before { background: linear-gradient(90deg, #EF4444 30%, #3B82F6 70%); }
+.quantum-piece.prob-x20::before { background: linear-gradient(90deg, #EF4444 20%, #3B82F6 80%); }
+.quantum-piece.prob-x10::before { background: linear-gradient(90deg, #EF4444 10%, #3B82F6 90%); }
 
 .quantum-symbols {
     position: relative;
-    font-size: 2rem;
+    font-size: 1.75rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 2;
 }
 
 .quantum-x {
-    color: #ff6b6b;
+    color: #EF4444;
     position: absolute;
     opacity: 0.6;
-    animation: shimmer 1.5s ease-in-out infinite alternate;
 }
 
 .quantum-o {
-    color: #4834d4;
+    color: #3B82F6;
     position: absolute;
     opacity: 0.6;
-    animation: shimmer 1.5s ease-in-out infinite alternate-reverse;
 }
 
-@keyframes shimmer {
-    0% { opacity: 0.3; transform: rotate(-5deg); }
-    100% { opacity: 0.8; transform: rotate(5deg); }
+.quantum-divider {
+    color: var(--text-muted);
+    opacity: 0.4;
+    margin: 0 4px;
+    font-size: 1rem;
 }
 
-/* Collapsed Piece Styles */
-.collapsed-x {
-    color: #ff6b6b;
-    font-size: 2rem;
-    animation: collapseIn 0.8s ease-out;
+/* Quantum container with probability bars */
+.quantum-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+}
+
+.probability-bars {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform-origin: center;
-    transform: translate(-50%, -50%);
-    width: auto;
-    height: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    display: flex;
+    opacity: 0.25;
+    z-index: 0;
+}
+
+.prob-bar {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.x-bar {
+    background: linear-gradient(to right, #EF4444, rgba(239, 68, 68, 0.6));
+}
+
+.o-bar {
+    background: linear-gradient(to left, #3B82F6, rgba(59, 130, 246, 0.6));
+}
+
+.quantum-probability {
+    display: flex;
+    gap: 8px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    z-index: 2;
+    margin-top: 2px;
+}
+
+.x-prob {
+    color: #EF4444;
+}
+
+.o-prob {
+    color: #3B82F6;
+}
+
+/* Collapsed pieces */
+.collapsed-x {
+    color: #EF4444;
+    font-size: 1.75rem;
+    font-weight: 800;
 }
 
 .collapsed-o {
-    color: #4834d4;
-    font-size: 2rem;
-    animation: collapseIn 0.8s ease-out;
+    color: #3B82F6;
+    font-size: 1.75rem;
+    font-weight: 800;
+}
+
+/* Collapse sphere */
+.collapse-sphere {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform-origin: center;
+    width: 70%;
+    height: 70%;
     transform: translate(-50%, -50%);
-    width: auto;
-    height: auto;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        #EF4444 0deg,
+        #EF4444 calc(var(--x-prob) * 3.6deg),
+        #3B82F6 calc(var(--x-prob) * 3.6deg),
+        #3B82F6 360deg
+    );
+    animation: spinCollapse 1.2s ease-out;
 }
 
-@keyframes collapseIn {
-    0% { 
-        opacity: 0;
-        transform: translate(-50%, -50%) rotate(180deg);
-    }
-    50% {
-        opacity: 0.5;
-        transform: translate(-50%, -50%) rotate(90deg);
-    }
-    100% { 
-        opacity: 1;
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
+@keyframes spinCollapse {
+    0% { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+    50% { transform: translate(-50%, -50%) rotate(360deg) scale(1.1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) rotate(720deg) scale(0); }
 }
 
-/* Probability Section */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+}
+
+/* Compact Probability Cards */
 .probability-section {
     text-align: center;
-    margin-bottom: 30px;
+    flex-shrink: 0;
 }
 
 .probability-section h3 {
-    color: white;
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
 }
 
 .instruction {
-    color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 20px;
-    font-size: 1rem;
+    font-size: 0.6875rem;
+    color: var(--text-muted);
+    margin-bottom: 5px;
 }
 
 .card-deck {
     display: flex;
     justify-content: center;
-    gap: 8px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 5px;
 }
 
 .probability-card {
-    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
-    border: 2px solid #fdcb6e;
-    border-radius: 12px;
-    padding: 10px;
-    min-width: 90px;
+    background: linear-gradient(135deg, #F59E0B 0%, #EF4444 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 6px;
+    min-width: 65px;
+    min-height: 44px;
+    flex: 1;
+    max-width: 85px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    position: relative;
-    overflow: hidden;
-    /* Improve touch responsiveness */
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    user-select: none;
+    transition: transform 0.2s ease;
+    box-shadow: var(--shadow);
+    color: white;
 }
 
-.probability-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
-    transform: rotate(45deg);
-    transition: all 0.5s ease;
-    opacity: 0;
-}
-
-.probability-card:hover::before {
-    animation: cardShine 0.5s ease-in-out;
-}
-
-@keyframes cardShine {
-    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); opacity: 0; }
-    50% { opacity: 1; }
-    100% { transform: translateX(100%) translateY(100%) rotate(45deg); opacity: 0; }
-}
-
-.probability-card:hover {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+.probability-card:active {
+    transform: scale(0.95);
 }
 
 .probability-card.selected {
-    background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
-    border-color: #5f3dc4;
-    color: white;
-    transform: translateY(-5px) scale(1.05);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    transform: scale(1.05);
+    box-shadow: var(--shadow-md);
 }
 
 .card-probabilities {
-    font-size: 0.8rem;
-    font-weight: bold;
-    line-height: 1.3;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    line-height: 1.2;
 }
 
-.x-prob {
-    color: #d63031;
+.x-prob, .o-prob {
+    color: white;
 }
 
-.o-prob {
-    color: #0984e3;
-}
-
-/* Buttons */
+/* Compact Buttons */
 .btn-primary, .btn-secondary {
-    padding: 12px 24px;
+    padding: 8px 14px;
+    min-height: 44px;
     border: none;
-    border-radius: 25px;
-    font-size: 1rem;
-    font-weight: bold;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    margin: 5px;
+    transition: all 0.2s ease;
+    margin: 0 2px;
     font-family: inherit;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+    background: var(--primary);
     color: white;
-    box-shadow: 0 4px 15px rgba(0,184,148,0.3);
+    box-shadow: var(--shadow);
 }
 
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,184,148,0.4);
+.btn-primary:active {
+    transform: scale(0.96);
+    background: var(--primary-dark);
 }
 
 .btn-secondary {
-    background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
-    color: white;
-    box-shadow: 0 4px 15px rgba(253,121,168,0.3);
+    background: var(--surface);
+    color: var(--primary);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
 }
 
-.btn-secondary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(253,121,168,0.4);
+.btn-secondary:active {
+    transform: scale(0.96);
+    background: var(--bg);
 }
 
-/* Game Controls */
+/* Controls */
 .game-controls {
     text-align: center;
-    margin-bottom: 30px;
+    flex-shrink: 0;
 }
 
-/* Modal Styles */
-.modal {
+/* Full Page Screens */
+.full-page {
     display: none;
     position: fixed;
     z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
+    height: 100vh;
+    height: -webkit-fill-available;
+    background: var(--bg);
+    overflow: hidden;
+}
+
+.full-page-content {
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
-.modal-content {
-    background: white;
-    margin: 5% auto;
-    padding: 30px;
-    border-radius: 20px;
-    width: 90%;
-    max-width: 600px;
+/* Page Header */
+.page-header {
+    flex-shrink: 0;
+    padding: 12px 16px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
-    animation: modalSlideIn 0.3s ease-out;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-@keyframes modalSlideIn {
-    from { opacity: 0; transform: translateY(-50px); }
-    to { opacity: 1; transform: translateY(0); }
+.page-header h1 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text);
 }
 
-.modal-content h2 {
-    color: #333;
+.back-btn {
+    position: absolute;
+    left: 12px;
+    background: none;
+    border: none;
+    color: var(--primary);
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.back-btn:active {
+    transform: scale(0.9);
+}
+
+/* Page Body */
+.page-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 16px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.page-body.scrollable {
+    padding-bottom: 24px;
+}
+
+.page-body.centered {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.page-body h2 {
+    font-size: 1.375rem;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.page-body p {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--text-muted);
     margin-bottom: 20px;
     text-align: center;
 }
 
-.modal-content p {
-    line-height: 1.6;
-    margin-bottom: 15px;
+/* Feature List */
+.feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
 }
 
-.modal-content ul {
-    margin: 15px 0;
-    padding-left: 20px;
-}
-
-.modal-content li {
-    margin-bottom: 8px;
-    line-height: 1.5;
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    position: absolute;
-    right: 15px;
-    top: 15px;
-}
-
-.close:hover {
-    color: #000;
-}
-
-.help-section {
-    margin-bottom: 25px;
-    padding: 15px;
-    background: #f8f9fa;
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 10px;
-    border-left: 4px solid #667eea;
 }
 
-.help-section h3 {
-    color: #667eea;
-    margin-bottom: 10px;
+.feature-icon {
+    font-size: 1.75rem;
+    flex-shrink: 0;
 }
 
-.win-content {
-    text-align: center;
+.feature-text {
+    flex: 1;
+    text-align: left;
 }
 
-.win-content h2 {
-    color: #00b894;
-    font-size: 2rem;
+.feature-text strong {
+    display: block;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 3px;
+}
+
+.feature-text p {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    margin: 0;
+    text-align: left;
+}
+
+/* Page Footer */
+.page-footer {
+    flex-shrink: 0;
+    padding: 12px 16px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+}
+
+.btn-large {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+/* Win Page Styles */
+.win-animation {
+    margin-bottom: 20px;
+}
+
+.trophy {
+    font-size: 4rem;
+    animation: bounce 1s ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-15px); }
+    50% { transform: translateY(0); }
+    75% { transform: translateY(-8px); }
+}
+
+.win-title {
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: var(--success);
+    margin-bottom: 12px;
+}
+
+.win-message {
+    font-size: 1rem;
+    color: var(--text);
     margin-bottom: 20px;
 }
 
 .quantum-fact {
-    background: linear-gradient(135deg, #ddd6fe 0%, #c7d2fe 100%);
-    padding: 15px;
-    border-radius: 10px;
-    margin: 20px 0;
+    background: #EEF2FF;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid #C7D2FE;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    text-align: left;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.fact-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.quantum-fact p {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: var(--primary);
     font-style: italic;
-    color: #4c1d95;
+    margin: 0;
+    text-align: left;
+}
+
+.help-section {
+    margin-bottom: 16px;
+    padding: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    border-left: 4px solid var(--primary);
+    text-align: left;
+}
+
+.help-section h3 {
+    color: var(--primary);
+    margin-bottom: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.help-section p {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+    margin-bottom: 0;
+    text-align: left;
+}
+
+.help-section ul {
+    margin: 10px 0 0 0;
+    padding-left: 18px;
+}
+
+.help-section li {
+    margin-bottom: 6px;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: var(--text-muted);
+}
+
+/* Mode Selection */
+.mode-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 400px;
+    padding: 0 20px;
+}
+
+.mode-btn {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
+}
+
+.mode-btn:active {
+    transform: scale(0.98);
+    background: var(--bg);
+    border-color: var(--primary);
+}
+
+.mode-icon {
+    font-size: 3rem;
+}
+
+.mode-btn strong {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.mode-btn p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin: 0;
 }
 
 /* Footer */
 footer {
     text-align: center;
-    color: rgba(255, 255, 255, 0.8);
-    margin-top: 30px;
-    font-size: 0.9rem;
+    color: var(--text-muted);
+    padding: 5px 0;
+    font-size: 0.625rem;
+    flex-shrink: 0;
 }
 
-/* Winning Line Animation */
+/* Winning line */
 .winning-line {
     position: absolute;
-    background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb);
-    height: 6px;
-    border-radius: 3px;
-    animation: winningLine 1s ease-in-out;
+    background: linear-gradient(90deg, #EF4444, #F59E0B, #3B82F6);
+    height: 5px;
+    border-radius: 2.5px;
+    animation: drawLine 0.5s ease-out;
     z-index: 10;
 }
 
-@keyframes winningLine {
-    0% { width: 0; opacity: 0; }
-    100% { width: 100%; opacity: 1; }
+@keyframes drawLine {
+    from { width: 0; opacity: 0; }
+    to { width: 100%; opacity: 1; }
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .container {
-        padding: 15px;
-        transform: scale(0.9);
-        transform-origin: top center;
+/* iOS Safe Area */
+@supports (-webkit-touch-callout: none) {
+    body {
+        min-height: -webkit-fill-available;
     }
-    
-    .modal-content {
-        margin: 5% auto;
-        padding: 20px;
-        transform: scale(1.1);
+    .container {
+        min-height: -webkit-fill-available;
     }
 }
 
-@media (max-width: 480px) {
-    .container {
-        padding: 10px;
-        transform: scale(0.75);
-        transform-origin: top center;
+/* Device-Specific Adjustments */
+@media only screen and (max-width: 375px) {
+    header h1 { font-size: 1.125rem; }
+    .board {
+        width: 185px;
+        height: 185px;
+        gap: 5px;
     }
-    
-    .modal-content {
-        margin: 2% auto;
-        padding: 15px;
-        transform: scale(1.33);
+    .cell { font-size: 1.625rem; }
+    .quantum-symbols { font-size: 1.625rem; }
+    .quantum-probability { font-size: 0.5625rem; gap: 6px; }
+    .collapsed-x, .collapsed-o { font-size: 1.625rem; }
+}
+
+@media only screen and (min-width: 376px) and (max-width: 414px) {
+    .board {
+        width: 200px;
+        height: 200px;
     }
+}
+
+@media only screen and (min-width: 415px) {
+    header h1 { font-size: 1.375rem; }
+    .board {
+        width: 220px;
+        height: 220px;
+    }
+    .cell { font-size: 2rem; }
+    .quantum-symbols { font-size: 2rem; }
+    .collapsed-x, .collapsed-o { font-size: 2rem; }
+}
+
+/* Landscape - Ultra Compact */
+@media only screen and (orientation: landscape) and (max-height: 450px) {
+    .container { padding: 4px 8px; gap: 3px; }
+    header h1 { font-size: 1rem; }
+    .subtitle { font-size: 0.625rem; }
+    .game-stats { gap: 3px; }
+    .stat-card { padding: 5px 3px; border-radius: 6px; }
+    .stat-label { font-size: 0.5rem; }
+    .stat-value { font-size: 0.875rem; }
+    .quantum-message { padding: 5px 8px; border-radius: 8px; }
+    .quantum-message h3 { font-size: 0.6875rem; margin-bottom: 2px; }
+    .quantum-message p { font-size: 0.5625rem; }
+    .board-container { padding: 6px; border-radius: 10px; }
+    .board {
+        width: 160px;
+        height: 160px;
+        gap: 5px;
+    }
+    .cell { font-size: 1.375rem; border-radius: 8px; }
+    .quantum-symbols { font-size: 1.375rem; }
+    .quantum-probability { font-size: 0.5625rem; gap: 5px; }
+    .collapsed-x, .collapsed-o { font-size: 1.375rem; }
+    .probability-section h3 { font-size: 0.6875rem; margin-bottom: 3px; }
+    .instruction { font-size: 0.625rem; margin-bottom: 3px; }
+    .card-deck { gap: 3px; margin-bottom: 3px; }
+    .probability-card { padding: 5px 4px; min-width: 50px; border-radius: 6px; }
+    .card-probabilities { font-size: 0.625rem; }
+    .btn-primary, .btn-secondary { padding: 5px 10px; font-size: 0.6875rem; min-height: 36px; border-radius: 6px; }
+    footer { padding: 3px 0; font-size: 0.5625rem; }
+}
+
+/* Very tall phones */
+@media only screen and (min-height: 844px) {
+    .container { gap: 8px; }
+    .board {
+        width: 220px;
+        height: 220px;
+        gap: 7px;
+    }
+}
+
+/* Short phones - extra compact */
+@media only screen and (max-height: 667px) {
+    .container { gap: 5px; padding-top: 5px; padding-bottom: 5px; }
+    header h1 { font-size: 1.125rem; }
+    .subtitle { font-size: 0.625rem; }
+    .stat-card { padding: 5px 3px; }
+    .stat-label { font-size: 0.5rem; }
+    .stat-value { font-size: 0.9375rem; }
+    .quantum-message { padding: 6px 8px; }
+    .quantum-message h3 { font-size: 0.6875rem; }
+    .quantum-message p { font-size: 0.5625rem; }
+    .board-container { padding: 8px; }
+    .board {
+        width: 180px;
+        height: 180px;
+        gap: 5px;
+    }
+    .cell { font-size: 1.5rem; }
+    .quantum-symbols { font-size: 1.5rem; }
+    .quantum-probability { font-size: 0.625rem; }
+    .collapsed-x, .collapsed-o { font-size: 1.5rem; }
+    .probability-section h3 { font-size: 0.75rem; }
+    .instruction { font-size: 0.625rem; }
+    .probability-card { padding: 7px 5px; }
+    .card-probabilities { font-size: 0.625rem; }
+    .btn-primary, .btn-secondary { padding: 7px 12px; font-size: 0.6875rem; }
+    footer { font-size: 0.5625rem; }
 }
