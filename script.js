@@ -234,6 +234,8 @@ class QuantumTicTacToe {
         this.quantumCount++;
         this.updateStats();
         
+        console.log('Placed quantum piece. Count:', this.quantumCount);
+        
         // Switch player
         this.switchPlayer();
     }
@@ -298,21 +300,29 @@ class QuantumTicTacToe {
         this.collapsedCount++;
         this.updateStats();
         
+        console.log('Collapsed quantum piece. Remaining quantum:', this.quantumCount);
+        
         // Check for win condition after animation completes
         setTimeout(() => {
             // Allow next action after collapse completes
             this.isCollapsing = false;
             
+            console.log('Checking game end conditions...');
+            
             if (this.checkWinCondition()) {
+                console.log('Winner found!');
                 this.handleGameWin();
                 return;
             }
             
             // Check for tie game
             if (this.checkTieGame()) {
+                console.log('Tie game detected!');
                 this.handleTieGame();
                 return;
             }
+            
+            console.log('Game continues...');
             
             // Switch player
             this.switchPlayer();
@@ -466,6 +476,14 @@ class QuantumTicTacToe {
         
         // Check if there are no quantum pieces left (all have been collapsed)
         const allCollapsed = this.quantumCount === 0;
+        
+        // Debug logging
+        console.log('Tie Check:', {
+            allCellsFilled,
+            quantumCount: this.quantumCount,
+            allCollapsed,
+            hasWinner: this.checkWinCondition()
+        });
         
         // It's a tie only if: board is full, all pieces collapsed, and no winner
         return allCellsFilled && allCollapsed && !this.checkWinCondition();
