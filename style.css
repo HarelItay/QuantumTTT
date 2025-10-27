@@ -186,6 +186,7 @@ header h1 {
     position: relative;
     min-width: 44px;
     min-height: 44px;
+    overflow: hidden;
 }
 
 .cell:active {
@@ -332,29 +333,70 @@ header h1 {
     font-weight: 800;
 }
 
-/* Collapse sphere */
+/* Collapse reveal animation */
+.collapse-reveal {
+    animation: collapseRevealBounce 0.5s ease-out forwards;
+}
+
+@keyframes collapseRevealBounce {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.3);
+    }
+    75% {
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Collapse sphere - Dramatic spinning animation */
 .collapse-sphere {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 70%;
-    height: 70%;
-    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background: conic-gradient(
-        from 0deg,
         #EF4444 0deg,
-        #EF4444 calc(var(--x-prob) * 3.6deg),
-        #3B82F6 calc(var(--x-prob) * 3.6deg),
-        #3B82F6 360deg
+        #3B82F6 180deg,
+        #EF4444 360deg
     );
-    animation: spinCollapse 1.2s ease-out;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.6), 0 0 40px rgba(59, 130, 246, 0.4);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+    animation: spinCollapseGame 2s ease-in-out forwards;
+    z-index: 10;
 }
 
-@keyframes spinCollapse {
-    0% { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
-    50% { transform: translate(-50%, -50%) rotate(360deg) scale(1.1); }
-    100% { opacity: 0; transform: translate(-50%, -50%) rotate(720deg) scale(0); }
+@keyframes spinCollapseGame {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+    }
+    15% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(180deg);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2) rotate(720deg);
+    }
+    75% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(1080deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0) rotate(1440deg);
+    }
 }
 
 @keyframes shake {
@@ -855,6 +897,435 @@ footer {
     .card-probabilities { font-size: 0.625rem; }
     .btn-primary, .btn-secondary { padding: 5px 10px; font-size: 0.6875rem; min-height: 36px; border-radius: 6px; }
     footer { padding: 3px 0; font-size: 0.5625rem; }
+}
+
+/* Tutorial Page Styles */
+.tutorial-body {
+    position: relative;
+    overflow-y: auto;
+    padding: 16px;
+}
+
+.tutorial-step {
+    display: none;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.tutorial-step.active {
+    display: block;
+}
+
+.step-number {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.tutorial-step h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+}
+
+.tutorial-step p {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    margin-top: 12px;
+}
+
+.tutorial-animation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: var(--card-bg);
+    border-radius: 16px;
+    margin: 12px 0;
+    min-height: 280px;
+    justify-content: center;
+}
+
+/* Step Instructions */
+.step-instruction {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin: 0 0 8px 0;
+    font-style: italic;
+}
+
+/* Demo Cards - Match Real Card Style */
+.demo-cards {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 0;
+}
+
+.demo-card {
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 8px;
+    min-width: 70px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.demo-card.pulse-anim {
+    animation: pulse 2s infinite;
+    border-color: #667eea;
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+}
+
+.demo-card .card-probabilities {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.demo-card .x-prob {
+    color: #EF4444;
+}
+
+.demo-card .o-prob {
+    color: #3B82F6;
+}
+
+/* Demo Board - Match Real Game Board */
+.demo-board-container {
+    background: var(--card-bg);
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.demo-board {
+    display: grid;
+    grid-template-columns: repeat(3, 60px);
+    grid-template-rows: repeat(3, 60px);
+    gap: 8px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.demo-cell {
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+}
+
+.demo-cell.pulse-anim {
+    animation: pulse 2s infinite;
+    border-color: #667eea;
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+}
+
+.demo-cell.win-cell {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
+    border-color: #667eea;
+}
+
+/* Demo Quantum Container - Match Real Quantum Pieces */
+.demo-quantum-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.demo-probability-bars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    display: flex;
+    opacity: 0.25;
+    z-index: 0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.demo-x-bar {
+    height: 100%;
+    background: linear-gradient(to right, #EF4444, rgba(239, 68, 68, 0.6));
+}
+
+.demo-o-bar {
+    height: 100%;
+    background: linear-gradient(to left, #3B82F6, rgba(59, 130, 246, 0.6));
+}
+
+.demo-quantum-symbols {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    z-index: 2;
+    position: relative;
+}
+
+.demo-quantum-x {
+    color: #EF4444;
+    opacity: 0.6;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.demo-quantum-o {
+    color: #3B82F6;
+    opacity: 0.6;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.demo-quantum-probs {
+    display: flex;
+    gap: 6px;
+    font-size: 0.5625rem;
+    font-weight: 700;
+    z-index: 2;
+    margin-top: 2px;
+}
+
+.demo-quantum-probs .x-text {
+    color: #EF4444;
+}
+
+.demo-quantum-probs .o-text {
+    color: #3B82F6;
+}
+
+/* Collapsed pieces in demo */
+.demo-collapsed-x {
+    color: #EF4444;
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.demo-collapsed-o {
+    color: #3B82F6;
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+/* Collapse Animation Demo */
+.collapse-demo-cell {
+    position: relative;
+    overflow: hidden;
+}
+
+.collapse-demo-cell .quantum-state {
+    animation: fadeOutSpin 4s infinite;
+}
+
+.demo-collapse-sphere {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: conic-gradient(
+        #EF4444 0deg,
+        #3B82F6 180deg,
+        #EF4444 360deg
+    );
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.5), 0 0 30px rgba(59, 130, 246, 0.4);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+    animation: spinCollapseSphere 4s infinite;
+    z-index: 3;
+}
+
+.collapse-demo-cell .collapsed-state {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #EF4444;
+    font-size: 1.5rem;
+    font-weight: 800;
+    opacity: 0;
+    animation: fadeInDelayed 4s infinite;
+    z-index: 4;
+}
+
+/* Pointer Arrow */
+.pointer-arrow {
+    font-size: 1.75rem;
+    animation: bounce 1.5s infinite;
+    margin-top: 4px;
+}
+
+/* Win Line Demo */
+.win-demo-container {
+    position: relative;
+}
+
+.win-line-demo {
+    position: absolute;
+    top: calc(12px + 30px);
+    left: 12px;
+    right: 12px;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 2px;
+    animation: expandLine 3s infinite;
+    box-shadow: 0 0 10px rgba(102, 126, 234, 0.6);
+    z-index: 10;
+}
+
+/* Tutorial Navigation */
+.tutorial-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+}
+
+.tutorial-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    opacity: 0.3;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.dot.active {
+    opacity: 1;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    transform: scale(1.2);
+}
+
+/* Tutorial Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 30px rgba(102, 126, 234, 0.6);
+    }
+}
+
+@keyframes fadeOutSpin {
+    0%, 25% {
+        opacity: 1;
+        transform: rotate(0deg);
+    }
+    50% {
+        opacity: 0;
+        transform: rotate(360deg);
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes spinCollapseSphere {
+    0%, 25% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+    }
+    35% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(180deg);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1) rotate(720deg);
+    }
+    65% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0) rotate(1080deg);
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeInDelayed {
+    0%, 65% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    75% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+    85%, 100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes expandLine {
+    0%, 10% {
+        width: 0;
+        opacity: 0;
+    }
+    30% {
+        width: 100%;
+        opacity: 1;
+    }
+    90% {
+        width: 100%;
+        opacity: 1;
+    }
+    100% {
+        width: 100%;
+        opacity: 0.5;
+    }
 }
 
 /* Very tall phones */

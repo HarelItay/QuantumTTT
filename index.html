@@ -67,7 +67,164 @@
                     </div>
                 </div>
                 <div class="page-footer">
-                    <button id="start-game" class="btn-primary btn-large">Choose Game Mode</button>
+                    <button id="show-tutorial" class="btn-primary btn-large">How to Play</button>
+                    <button id="skip-tutorial" class="btn-secondary btn-large">Skip to Game</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tutorial Page -->
+        <div id="tutorial-modal" class="full-page" style="display: none;">
+            <div class="full-page-content">
+                <div class="page-header">
+                    <button class="back-btn" id="back-from-tutorial">←</button>
+                    <h1>How to Play</h1>
+                </div>
+                <div class="page-body tutorial-body">
+                    <div class="tutorial-step active" data-step="1">
+                        <div class="step-number">Step 1</div>
+                        <h3>🎴 Select a Probability Card</h3>
+                        <div class="tutorial-animation">
+                            <p class="step-instruction">Tap a card to select it</p>
+                            <div class="demo-cards">
+                                <div class="demo-card pulse-anim">
+                                    <div class="card-probabilities">
+                                        <div class="x-prob">60% X</div>
+                                        <div class="o-prob">40% O</div>
+                                    </div>
+                                </div>
+                                <div class="demo-card">
+                                    <div class="card-probabilities">
+                                        <div class="x-prob">50% X</div>
+                                        <div class="o-prob">50% O</div>
+                                    </div>
+                                </div>
+                                <div class="demo-card">
+                                    <div class="card-probabilities">
+                                        <div class="x-prob">40% X</div>
+                                        <div class="o-prob">60% O</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pointer-arrow">👆</div>
+                        </div>
+                        <p>Each card shows different probabilities. Higher X% = more likely to collapse as X!</p>
+                    </div>
+
+                    <div class="tutorial-step" data-step="2">
+                        <div class="step-number">Step 2</div>
+                        <h3>🎯 Place Your Quantum Piece</h3>
+                        <div class="tutorial-animation">
+                            <p class="step-instruction">Tap an empty cell to place your piece</p>
+                            <div class="demo-board-container">
+                                <div class="demo-board">
+                                    <div class="demo-cell"></div>
+                                    <div class="demo-cell pulse-anim">
+                                        <div class="demo-quantum-container">
+                                            <div class="demo-probability-bars">
+                                                <div class="demo-x-bar" style="width: 60%"></div>
+                                                <div class="demo-o-bar" style="width: 40%"></div>
+                                            </div>
+                                            <div class="demo-quantum-symbols">
+                                                <span class="demo-quantum-x">✗</span>
+                                                <span class="demo-quantum-o">◯</span>
+                                            </div>
+                                            <div class="demo-quantum-probs">
+                                                <span class="x-text">60%</span>
+                                                <span class="o-text">40%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="demo-cell"></div>
+                                    <div class="demo-cell"></div>
+                                    <div class="demo-cell"></div>
+                                    <div class="demo-cell"></div>
+                                    <div class="demo-cell"></div>
+                                    <div class="demo-cell"></div>
+                                    <div class="demo-cell"></div>
+                                </div>
+                            </div>
+                            <div class="pointer-arrow">👆</div>
+                        </div>
+                        <p>Your piece shows both X and O with probability bars. It's in quantum superposition!</p>
+                    </div>
+
+                    <div class="tutorial-step" data-step="3">
+                        <div class="step-number">Step 3</div>
+                        <h3>⚡ Collapse the Wave Function</h3>
+                        <div class="tutorial-animation">
+                            <p class="step-instruction">Tap a quantum piece to observe it</p>
+                            <div class="demo-board-container">
+                                <div class="demo-board">
+                                    <div class="demo-cell pulse-anim collapse-demo-cell">
+                                        <div class="demo-quantum-container quantum-state">
+                                            <div class="demo-probability-bars">
+                                                <div class="demo-x-bar" style="width: 70%"></div>
+                                                <div class="demo-o-bar" style="width: 30%"></div>
+                                            </div>
+                                            <div class="demo-quantum-symbols">
+                                                <span class="demo-quantum-x">✗</span>
+                                                <span class="demo-quantum-o">◯</span>
+                                            </div>
+                                            <div class="demo-quantum-probs">
+                                                <span class="x-text">70%</span>
+                                                <span class="o-text">30%</span>
+                                            </div>
+                                        </div>
+                                        <div class="demo-collapse-sphere"></div>
+                                        <span class="collapsed-state">✗</span>
+                                    </div>
+                                    <div class="demo-cell"></div>
+                                    <div class="demo-cell"></div>
+                                    <div class="demo-cell"></div>
+                                    <div class="demo-cell"></div>
+                                    <div class="demo-cell"></div>
+                                    <div class="demo-cell"></div>
+                                    <div class="demo-cell"></div>
+                                    <div class="demo-cell"></div>
+                                </div>
+                            </div>
+                            <div class="pointer-arrow">👆</div>
+                        </div>
+                        <p>The quantum piece spins and collapses into either X or O based on its probabilities!</p>
+                    </div>
+
+                    <div class="tutorial-step" data-step="4">
+                        <div class="step-number">Step 4</div>
+                        <h3>🏆 Win the Game!</h3>
+                        <div class="tutorial-animation">
+                            <p class="step-instruction">Get 3 in a row with collapsed pieces</p>
+                            <div class="demo-board-container win-demo-container">
+                                <div class="demo-board">
+                                    <div class="demo-cell win-cell"><span class="demo-collapsed-x">✗</span></div>
+                                    <div class="demo-cell win-cell"><span class="demo-collapsed-x">✗</span></div>
+                                    <div class="demo-cell win-cell"><span class="demo-collapsed-x">✗</span></div>
+                                    <div class="demo-cell"><span class="demo-collapsed-o">◯</span></div>
+                                    <div class="demo-cell"><span class="demo-collapsed-o">◯</span></div>
+                                    <div class="demo-cell"></div>
+                                    <div class="demo-cell"></div>
+                                    <div class="demo-cell"></div>
+                                    <div class="demo-cell"></div>
+                                </div>
+                                <div class="win-line-demo"></div>
+                            </div>
+                        </div>
+                        <p>Only collapsed pieces count! Line up 3 X's or 3 O's to claim victory! 🎉</p>
+                    </div>
+
+                    <div class="tutorial-navigation">
+                        <button id="prev-step" class="btn-secondary">← Previous</button>
+                        <div class="tutorial-dots">
+                            <span class="dot active" data-step="1"></span>
+                            <span class="dot" data-step="2"></span>
+                            <span class="dot" data-step="3"></span>
+                            <span class="dot" data-step="4"></span>
+                        </div>
+                        <button id="next-step" class="btn-primary">Next →</button>
+                    </div>
+                </div>
+                <div class="page-footer">
+                    <button id="start-after-tutorial" class="btn-primary btn-large">Start Playing!</button>
                 </div>
             </div>
         </div>
@@ -91,9 +248,9 @@
                             <p>Play against a friend locally</p>
                         </button>
                         <button id="mode-vs-computer" class="mode-btn">
-                            <span class="mode-icon">🤖</span>
-                            <strong>Player vs Computer</strong>
-                            <p>Challenge the AI with random strategies</p>
+                            <span class="mode-icon">⚛️</span>
+                            <strong>Player vs Quantum Computer</strong>
+                            <p>Challenge the quantum AI with adaptive strategies</p>
                         </button>
                     </div>
                 </div>

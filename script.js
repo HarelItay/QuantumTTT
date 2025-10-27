@@ -12,6 +12,7 @@ class QuantumTicTacToe {
         this.aiStrategy = null; // Will be set randomly: 'aggressive', 'defensive', 'balanced', 'random'
         this.aiThinking = false;
         this.isCollapsing = false; // Prevent multiple collapses per turn
+        this.currentTutorialStep = 1; // Tutorial navigation
         
         this.initializeGame();
         this.setupEventListeners();
@@ -61,8 +62,25 @@ class QuantumTicTacToe {
         // Control buttons
         document.getElementById('reset-game').addEventListener('click', () => this.resetGame());
         document.getElementById('show-help').addEventListener('click', () => this.showHelpModal());
-        document.getElementById('start-game').addEventListener('click', () => this.showModeSelect());
         document.getElementById('play-again').addEventListener('click', () => this.resetGame());
+        
+        // Intro screen buttons
+        document.getElementById('show-tutorial').addEventListener('click', () => this.showTutorial());
+        document.getElementById('skip-tutorial').addEventListener('click', () => this.showModeSelect());
+        
+        // Tutorial navigation
+        document.getElementById('prev-step').addEventListener('click', () => this.changeTutorialStep(-1));
+        document.getElementById('next-step').addEventListener('click', () => this.changeTutorialStep(1));
+        document.getElementById('back-from-tutorial').addEventListener('click', () => this.closeTutorial());
+        document.getElementById('start-after-tutorial').addEventListener('click', () => this.showModeSelect());
+        
+        // Tutorial dots navigation
+        document.querySelectorAll('.dot').forEach(dot => {
+            dot.addEventListener('click', () => {
+                const step = parseInt(dot.dataset.step);
+                this.goToTutorialStep(step);
+            });
+        });
         
         // Mode selection buttons
         document.getElementById('mode-vs-player').addEventListener('click', () => this.startGame('pvp'));
@@ -159,17 +177,12 @@ class QuantumTicTacToe {
             return;
         }
         
-        // If a different card is already selected, prevent changing
+        // If a different card is selected, switch to the new one
         if (this.selectedCard) {
-            // Shake animation feedback
-            const selectedElement = document.querySelector('.probability-card.selected');
-            if (selectedElement) {
-                selectedElement.style.animation = 'shake 0.3s';
-                setTimeout(() => {
-                    selectedElement.style.animation = '';
-                }, 300);
-            }
-            return;
+            // Remove selection from previous card
+            document.querySelectorAll('.probability-card').forEach(card => {
+                card.classList.remove('selected');
+            });
         }
         
         // Select new card
@@ -221,6 +234,12 @@ class QuantumTicTacToe {
         this.quantumCount++;
         this.updateStats();
         
+        // Check for tie (board full)
+        if (this.checkTieGame()) {
+            this.handleTieGame();
+            return;
+        }
+        
         // Switch player
         this.switchPlayer();
     }
@@ -232,6 +251,12 @@ class QuantumTicTacToe {
         // Prevent multiple collapses
         this.isCollapsing = true;
 
+        // Clear any selected card
+        this.selectedCard = null;
+        document.querySelectorAll('.probability-card').forEach(card => {
+            card.classList.remove('selected');
+        });
+
         // Start the dramatic collapse animation
         this.startCollapseAnimation(index, quantumPiece);
     }
@@ -239,27 +264,25 @@ class QuantumTicTacToe {
     startCollapseAnimation(index, quantumPiece) {
         const cellElement = document.querySelectorAll('.cell')[index];
         
-        // Create a spinning sphere element
-        const sphereElement = document.createElement('div');
-        sphereElement.className = 'collapse-sphere';
+        // Fade out the quantum piece first
+        cellElement.style.transition = 'opacity 0.3s ease-out';
+        cellElement.style.opacity = '0.3';
         
-        // Set sphere colors based on probabilities
-        const xProb = quantumPiece.xProbability;
-        const oProb = quantumPiece.oProbability;
-        sphereElement.style.setProperty('--x-prob', xProb);
-        sphereElement.style.setProperty('--o-prob', oProb);
-        
-        // Replace quantum piece with sphere
-        cellElement.innerHTML = '';
-        cellElement.appendChild(sphereElement);
-        
-        // Start the sphere animation
-        sphereElement.style.animation = 'sphereCollapse 2s ease-in-out';
-        
-        // After animation completes, reveal the result
         setTimeout(() => {
-            this.revealCollapsedResult(index, quantumPiece);
-        }, 1500); // Reveal happens at 75% of animation (1.5s out of 2s)
+            // Create the dramatic spinning sphere
+            const sphereElement = document.createElement('div');
+            sphereElement.className = 'collapse-sphere';
+            
+            // Clear cell and add sphere
+            cellElement.innerHTML = '';
+            cellElement.appendChild(sphereElement);
+            cellElement.style.opacity = '1';
+            
+            // After sphere animation completes (2s), reveal the result
+            setTimeout(() => {
+                this.revealCollapsedResult(index, quantumPiece);
+            }, 1800); // Reveal just before animation ends
+        }, 300); // Wait for quantum piece fade
     }
 
     revealCollapsedResult(index, quantumPiece) {
@@ -288,6 +311,12 @@ class QuantumTicTacToe {
             
             if (this.checkWinCondition()) {
                 this.handleGameWin();
+                return;
+            }
+            
+            // Check for tie game
+            if (this.checkTieGame()) {
+                this.handleTieGame();
                 return;
             }
             
@@ -324,8 +353,12 @@ class QuantumTicTacToe {
         const symbol = collapsedPiece.value === 'X' ? '✗' : '◯';
         const className = collapsedPiece.value === 'X' ? 'collapsed-x' : 'collapsed-o';
         
-        cellElement.innerHTML = `<span class="${className}">${symbol}</span>`;
+        cellElement.innerHTML = `<span class="${className} collapse-reveal">${symbol}</span>`;
         cellElement.classList.add('occupied', 'collapsed');
+        
+        // Reset opacity
+        cellElement.style.opacity = '1';
+        cellElement.style.transition = '';
     }
 
 
@@ -431,6 +464,30 @@ class QuantumTicTacToe {
         
         board.style.position = 'relative';
         board.appendChild(line);
+    }
+
+    checkTieGame() {
+        // Check if all cells are filled (either collapsed or quantum)
+        const allCellsFilled = this.board.every(cell => cell !== null);
+        
+        // If all cells are filled and no one has won, it's a tie
+        return allCellsFilled && !this.checkWinCondition();
+    }
+
+    handleTieGame() {
+        this.gameOver = true;
+        
+        // Show tie modal
+        setTimeout(() => {
+            const winModal = document.getElementById('win-modal');
+            const winTitle = document.getElementById('win-title');
+            const winMessage = document.getElementById('win-message');
+            
+            winTitle.textContent = '🤝 It\'s a Tie! 🤝';
+            winMessage.textContent = 'The quantum realm has reached equilibrium! All possibilities have been explored, but no clear winner emerged. The wave functions remain in perfect balance!';
+            
+            winModal.style.display = 'block';
+        }, 1000);
     }
 
     switchPlayer() {
@@ -871,7 +928,75 @@ class QuantumTicTacToe {
 
     showModeSelect() {
         document.getElementById('intro-modal').style.display = 'none';
+        document.getElementById('tutorial-modal').style.display = 'none';
         document.getElementById('mode-select-modal').style.display = 'block';
+    }
+
+    showTutorial() {
+        document.getElementById('intro-modal').style.display = 'none';
+        document.getElementById('tutorial-modal').style.display = 'block';
+        this.currentTutorialStep = 1;
+        this.updateTutorialStep();
+    }
+
+    closeTutorial() {
+        document.getElementById('tutorial-modal').style.display = 'none';
+        document.getElementById('intro-modal').style.display = 'block';
+        this.currentTutorialStep = 1;
+        this.updateTutorialStep();
+    }
+
+    changeTutorialStep(direction) {
+        const newStep = this.currentTutorialStep + direction;
+        if (newStep >= 1 && newStep <= 4) {
+            this.currentTutorialStep = newStep;
+            this.updateTutorialStep();
+        } else if (newStep > 4) {
+            // Done button clicked - go to mode selection
+            this.showModeSelect();
+        }
+    }
+
+    goToTutorialStep(step) {
+        this.currentTutorialStep = step;
+        this.updateTutorialStep();
+    }
+
+    updateTutorialStep() {
+        // Update step visibility
+        document.querySelectorAll('.tutorial-step').forEach(stepEl => {
+            const stepNum = parseInt(stepEl.dataset.step);
+            if (stepNum === this.currentTutorialStep) {
+                stepEl.classList.add('active');
+            } else {
+                stepEl.classList.remove('active');
+            }
+        });
+
+        // Update dots
+        document.querySelectorAll('.dot').forEach(dot => {
+            const dotStep = parseInt(dot.dataset.step);
+            if (dotStep === this.currentTutorialStep) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+
+        // Update button states
+        const prevBtn = document.getElementById('prev-step');
+        const nextBtn = document.getElementById('next-step');
+        
+        prevBtn.disabled = this.currentTutorialStep === 1;
+        // Don't disable next button on step 4 - let it act as "Done"
+        nextBtn.disabled = false;
+
+        // Update button text
+        if (this.currentTutorialStep === 4) {
+            nextBtn.textContent = 'Done ✓';
+        } else {
+            nextBtn.textContent = 'Next →';
+        }
     }
 
     startGame(mode) {
