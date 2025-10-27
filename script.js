@@ -234,12 +234,6 @@ class QuantumTicTacToe {
         this.quantumCount++;
         this.updateStats();
         
-        // Check for tie (board full)
-        if (this.checkTieGame()) {
-            this.handleTieGame();
-            return;
-        }
-        
         // Switch player
         this.switchPlayer();
     }
@@ -467,11 +461,14 @@ class QuantumTicTacToe {
     }
 
     checkTieGame() {
-        // Check if all cells are filled (either collapsed or quantum)
+        // Check if all cells are filled
         const allCellsFilled = this.board.every(cell => cell !== null);
         
-        // If all cells are filled and no one has won, it's a tie
-        return allCellsFilled && !this.checkWinCondition();
+        // Check if there are no quantum pieces left (all have been collapsed)
+        const allCollapsed = this.quantumCount === 0;
+        
+        // It's a tie only if: board is full, all pieces collapsed, and no winner
+        return allCellsFilled && allCollapsed && !this.checkWinCondition();
     }
 
     handleTieGame() {
