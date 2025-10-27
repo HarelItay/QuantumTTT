@@ -180,11 +180,11 @@ class QuantumTicTacToe {
         // If a different card is selected, switch to the new one
         if (this.selectedCard) {
             // Remove selection from previous card
-            document.querySelectorAll('.probability-card').forEach(card => {
-                card.classList.remove('selected');
-            });
+        document.querySelectorAll('.probability-card').forEach(card => {
+            card.classList.remove('selected');
+        });
         }
-        
+
         // Select new card
         cardElement.classList.add('selected');
         this.selectedCard = this.probabilityDeck.find(card => card.id === cardId);
@@ -234,8 +234,6 @@ class QuantumTicTacToe {
         this.quantumCount++;
         this.updateStats();
         
-        console.log('Placed quantum piece. Count:', this.quantumCount);
-        
         // Switch player
         this.switchPlayer();
     }
@@ -266,17 +264,17 @@ class QuantumTicTacToe {
         
         setTimeout(() => {
             // Create the dramatic spinning sphere
-            const sphereElement = document.createElement('div');
-            sphereElement.className = 'collapse-sphere';
-            
+        const sphereElement = document.createElement('div');
+        sphereElement.className = 'collapse-sphere';
+        
             // Clear cell and add sphere
-            cellElement.innerHTML = '';
-            cellElement.appendChild(sphereElement);
+        cellElement.innerHTML = '';
+        cellElement.appendChild(sphereElement);
             cellElement.style.opacity = '1';
-            
+        
             // After sphere animation completes (2s), reveal the result
-            setTimeout(() => {
-                this.revealCollapsedResult(index, quantumPiece);
+        setTimeout(() => {
+            this.revealCollapsedResult(index, quantumPiece);
             }, 1800); // Reveal just before animation ends
         }, 300); // Wait for quantum piece fade
     }
@@ -300,29 +298,21 @@ class QuantumTicTacToe {
         this.collapsedCount++;
         this.updateStats();
         
-        console.log('Collapsed quantum piece. Remaining quantum:', this.quantumCount);
-        
         // Check for win condition after animation completes
         setTimeout(() => {
             // Allow next action after collapse completes
             this.isCollapsing = false;
             
-            console.log('Checking game end conditions...');
-            
             if (this.checkWinCondition()) {
-                console.log('Winner found!');
                 this.handleGameWin();
                 return;
             }
             
             // Check for tie game
             if (this.checkTieGame()) {
-                console.log('Tie game detected!');
                 this.handleTieGame();
                 return;
             }
-            
-            console.log('Game continues...');
             
             // Switch player
             this.switchPlayer();
@@ -476,14 +466,6 @@ class QuantumTicTacToe {
         
         // Check if there are no quantum pieces left (all have been collapsed)
         const allCollapsed = this.quantumCount === 0;
-        
-        // Debug logging
-        console.log('Tie Check:', {
-            allCellsFilled,
-            quantumCount: this.quantumCount,
-            allCollapsed,
-            hasWinner: this.checkWinCondition()
-        });
         
         // It's a tie only if: board is full, all pieces collapsed, and no winner
         return allCellsFilled && allCollapsed && !this.checkWinCondition();
